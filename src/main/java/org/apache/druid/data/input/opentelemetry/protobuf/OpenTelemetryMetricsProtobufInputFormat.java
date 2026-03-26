@@ -19,7 +19,10 @@
 package org.apache.druid.data.input.opentelemetry.protobuf;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.io.ByteStreams;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 import org.apache.druid.data.input.InputEntity;
 import org.apache.druid.data.input.InputEntityReader;
@@ -63,10 +66,23 @@ public class OpenTelemetryMetricsProtobufInputFormat implements InputFormat {
         SettableByteEntity<? extends ByteEntity> settableEntity;
         if (source instanceof SettableByteEntity) {
             settableEntity = (SettableByteEntity<? extends ByteEntity>) source;
-        } else {
+        } else if (source instanceof ByteEntity) {
             SettableByteEntity<ByteEntity> wrapper = new SettableByteEntity<>();
             wrapper.setEntity((ByteEntity) source);
             settableEntity = wrapper;
+        } else {
+            try {
+                SettableByteEntity<ByteEntity> wrapper = new SettableByteEntity<>();
+                try (InputStream is = source.open()) {
+                    wrapper.setEntity(new ByteEntity(ByteStreams.toByteArray(is)));
+                }
+                settableEntity = wrapper;
+            } catch (IOException e) {
+                throw new RuntimeException(
+                        "Failed to read bytes from InputEntity: "
+                                + source.getClass().getName(),
+                        e);
+            }
         }
         return new OpenTelemetryMetricsProtobufReader(
                 inputRowSchema.getDimensionsSpec(),
