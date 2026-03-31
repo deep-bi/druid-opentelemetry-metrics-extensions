@@ -21,19 +21,25 @@
 
 The [OpenTelemetry](https://opentelemetry.io/) extensions provides the ability to read metrics in OTLP format
 
-## Configuration
+## Installation and configuration
 
-### How to enable and use the extension
+To install the extension:
 
-To enable the OpenTelemetry Metrics extensions, add the extension and enable the extension in `common.runtime.properties`.
+1. Extract and copy `druid-opentelemetry-metrics-extensions` into your Druid `extensions` directory.
+2. Edit `conf/_common/common.runtime.properties` to add `"druid-opentelemetry-metrics-extensions"` to `druid.extensions.loadList` 
+   parameter. It should look like: 
 
-Load the plugin:
+   ```
+   druid.extensions.loadList=[..., "druid-opentelemetry-metrics-extensions"]
+   ```
+   There typically will be a few other extensions there too.
 
-```properties
-druid.extensions.loadList=[..., "druid-opentelemetry-metrics-extensions"]
-```
+3. Restart your Druid cluster.
 
-Now Sumbit the Supervisor Config with [source input format](https://druid.apache.org/docs/latest/ingestion/data-formats/) as:
+## Data source configuration
+
+After enabling the extension in `common.runtime.properties` you can submit a new Supervisor config with
+[source input format](https://druid.apache.org/docs/latest/ingestion/data-formats/) as:
 
 ```
 "ioConfig": {
