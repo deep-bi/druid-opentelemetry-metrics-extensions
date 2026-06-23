@@ -425,7 +425,7 @@ public class OpenTelemetryMetricsProtobufReaderTest {
                 .getGaugeBuilder()
                 .addDataPointsBuilder()
                 .setAsInt(6)
-                .setFlags(DataPointFlags.FLAG_NO_RECORDED_VALUE_VALUE)
+                .setFlags(DataPointFlags.DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK.getNumber())
                 .setTimeUnixNano(TIMESTAMP);
 
         MetricsData metricsData = metricsDataBuilder.build();

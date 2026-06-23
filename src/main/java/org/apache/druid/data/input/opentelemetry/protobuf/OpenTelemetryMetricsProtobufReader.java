@@ -159,7 +159,7 @@ public class OpenTelemetryMetricsProtobufReader implements InputEntityReader {
     }
 
     private static boolean hasRecordedValue(NumberDataPoint d) {
-        return (d.getFlags() & DataPointFlags.FLAG_NO_RECORDED_VALUE_VALUE) == 0;
+        return (d.getFlags() & DataPointFlags.DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK.getNumber()) == 0;
     }
 
     private InputRow parseNumberDataPoint(
