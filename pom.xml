@@ -26,7 +26,7 @@
     <artifactId>druid-opentelemetry-metrics-extensions</artifactId>
     <name>druid-opentelemetry-metrics-extensions</name>
     <description>druid-opentelemetry-metrics-extensions</description>
-    <version>37.0.0-deepbi1-SNAPSHOT</version>
+    <version>37.0.0-deepbi1</version>
 
     <properties>
         <java.version>17</java.version>
