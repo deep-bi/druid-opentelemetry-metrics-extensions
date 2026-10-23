@@ -21,6 +21,25 @@
 
 The [OpenTelemetry](https://opentelemetry.io/) extensions provides the ability to read metrics in OTLP format
 
+## Compatibility and building
+
+This version targets Apache Druid **38.0.0** and requires **JDK 21 or newer**
+and **Maven 3.6.3 or newer** to build. Druid 38 supports Java 21 and Java 25;
+Java 17 is no longer supported. CI uses JDK 21.
+
+```sh
+mvn clean verify
+```
+
+This runs the tests and formatting checks and creates
+`target/druid-opentelemetry-metrics-extensions-38.0.0-deepbi1-SNAPSHOT-bin.tar.gz`.
+
+Shared dependencies match the [Druid 38.0.0 dependency versions](https://github.com/apache/druid/blob/druid-38.0.0/pom.xml):
+Jackson 2.22.2, Guava 32.1.3-jre, Guice 6.0.0, and Protobuf 3.25.8.
+OpenTelemetry proto remains at 1.3.2-alpha because newer releases require
+Protobuf 4. Keeping the Protobuf 3 runtime avoids introducing a different major
+version into Druid's extension classpath.
+
 ## Installation and configuration
 
 To install the extension:
